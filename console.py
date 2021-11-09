@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """modulo cmd"""
 import cmd
-import models
+import models import storage_obj
 import json
 from models.base_model import BaseModel
 
@@ -10,65 +10,75 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
-    def do_create(self, args_nameclass):
+    def do_create(self, line_args_obj):
         """
         Creates a new instance of BaseModel,
         saves it (to the JSON file) and prints the id.
         Ex: $ create BaseModel
         """
-        if args_nameclass == "" or args_nameclass is None:
+        if line_args_obj == "" or line_args_obj is None:
             print('** class name missing **')
-        elif args_nameclass not in self.classes:
+        elif line_args_obj not in self.classes:
             print("** class doesn't exist **")
         else:
-            new_instance = ("{}".format(args_nameclass))
+            new_instance = ("{}".format(line_args_obj))
             new_instance.save()
             print(new.id)
         
-    def do_show(self, args_nameclass):
+    def do_show(self, line_args_obj):
         """
         Prints the string representation of an instance
         based on the class name and id
         """
-
-        if args_nameclass == "" or args_nameclass is None:
+        args = line_args_obj.split(' ')
+        if line_args_obj == "" or line_args_obj is None:
             print("** class name missing **")
-        else:
-            if args_nameclass not in self.classes:
-                print("** class doesn't exist **")
-        "__id"
+        elif line_args_obj not in self.classes:
+            print("** class doesn't exist **")
+            return False
+        if len(args) < 2:
+            print("** instance id missing **")
+            return False     
         
-        "________Si la instancia del nombre de la clase no existe para la identificación,"
-        "___________imprima ** no se encontró ninguna instancia **"
+        all_objects = storage_obj.all()
+        for i in all_objects.keys():
+            if i == "{}.{}".format(args[0], args[1]):
+                print(all_objects[i])
+        print("** no instance found **")
     
-    def do_destroy(self, args_nameclass):
+    def do_destroy(self, line_args_obj):
         """
         Deletes an instance based on the class name and id
         (save the change into the JSON file)
         """
-        if args_nameclass is None:
+        args = line_args_obj.split(' ')
+        if line_args_obj == "" or line_args_obj is None:
             print("** class name missing **")
-        elif args_cut not in self.my_classes:
+        elif line_args_obj not in self.my_classes:
             print("** class doesn't exist **")
-        elif len(args_cut) < 2:
+        if len(args) < 2:
             print("** instance id missing **")
         else:
-            "________Si la instancia del nombre de la clase no existe para la identificación,"
-            "___________imprima ** no se encontró ninguna instancia **"
+            all_objects = storage_obj.all()
+            for i in all_objects:
+                if i == "{}.{}".format(args[0], args[1]):
+                    all_objects.pop(i)
+                    storage_obj.save()
+        print("** no instance found **")
     
-    def do_all(self, args_nameclass):
+    def do_all(self, line_args_obj):
         """
          Prints all string representation of all instances
          based or not on the class name.
         """
 
-    def do_update(self, args_nameclass):
+    def do_update(self, line_args_obj):
         """
         Updates an instance based on the class name and id by
         adding or updating attribute (save the change into the JSON file)
         """
         args_cut = line_args.split(' ')
-        if len(args_nameclass) < 1:
+        if len(line_args_obj) < 1:
             print("** class name missing **")
         elif ("no entiendo: Si el valor del nombre del atributo no existe, imprima"):
             print("** value missing **")           
