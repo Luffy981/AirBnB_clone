@@ -43,6 +43,6 @@ class FileStorage:
             with open(self.__file_path, 'r', encoding='UTF-8') as file:
                 js = json.load(file)
             for key in js:
-                self.__objects[key] = classes[js[key]["__class"]](**js[key])
+                self.__objects[key] = classes[js[key]["__class__"]](**js[key])
         except FileNotFoundError:
             pass

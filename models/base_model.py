@@ -1,7 +1,8 @@
 import uuid
 from datetime import datetime
+from models import storage
 """Air bnb proyect!!!"""
-
+# Date format
 date = "%Y-%m-%dT%H:%M:%S.%f"
 
 
@@ -19,14 +20,24 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
+            storage.new(self)
 
     def __str__(self):
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        """ should print: [<class name>] (<self.id>) <self.__dict__>"""
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
+        """updates the public instance attribute
+        updated_at with the current datetime"""
         self.update_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
-        dictionary = self.__dict__
-        dictionary[self.__class__.__name__] = s
+        dictionary = self.__dict__.copy()
+        if "created_at" in dictionary:
+            dictionary["created_at"] = dictionary["created_at"].strftime(date)
+        if "update_at" in dictionary:
+            dictionary["updated_at"] = dictionary["updated_at"].strftime(date)
+        dictionary[self.__class__.__name__] = self.__class__.__name__
         return dictionary
