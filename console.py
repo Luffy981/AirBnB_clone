@@ -1,14 +1,16 @@
 #!/usr/bin/python3
 """modulo cmd"""
 import cmd
-import models import storage_obj
+from models import storage_obj
 import json
 from models.base_model import BaseModel
+import sys
 
+
+classes = ["BaseModel": BaseModel, "User": User, "State": State, "City": City, "Amenity": Amenity, "Place": Place, "Review": Review]
 class HBNBCommand(cmd.Cmd):
     """Airbnb's command interpreter"""
     prompt = '(hbnb) '
-    classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def do_create(self, line_args_obj):
         """
@@ -23,71 +25,85 @@ class HBNBCommand(cmd.Cmd):
         else:
             new_instance = ("{}".format(line_args_obj))
             new_instance.save()
-            print(new.id)
-        
+            print(new_instance.id)
+
     def do_show(self, line_args_obj):
         """
         Prints the string representation of an instance
         based on the class name and id
+        Ex: $ show BaseModel 1234-1234-1234
         """
-        args = line_args_obj.split(' ')
+        args = line_args_obj.split()
         if line_args_obj == "" or line_args_obj is None:
             print("** class name missing **")
-        elif line_args_obj not in self.classes:
+        elif args[0] not in classes.keys():
             print("** class doesn't exist **")
             return False
         if len(args) < 2:
             print("** instance id missing **")
-            return False     
-        
-        all_objects = storage_obj.all()
-        for i in all_objects.keys():
-            if i == "{}.{}".format(args[0], args[1]):
-                print(all_objects[i])
-        print("** no instance found **")
-    
+            return False
+        instance = args[0] + "." + args[1]
+        if instance in models.storage.all():
+            print(models.storage.all()[instance])
+        else:
+            print("** no instance found **")
+
     def do_destroy(self, line_args_obj):
         """
         Deletes an instance based on the class name and id
         (save the change into the JSON file)
         """
-        args = line_args_obj.split(' ')
+        args = line_args_obj.split()
         if line_args_obj == "" or line_args_obj is None:
             print("** class name missing **")
-        elif line_args_obj not in self.my_classes:
+        elif args[0] not in classes.keys():
             print("** class doesn't exist **")
         if len(args) < 2:
             print("** instance id missing **")
         else:
-            all_objects = storage_obj.all()
+            all_objects = models.storage.all()
             for i in all_objects:
                 if i == "{}.{}".format(args[0], args[1]):
+                    # del models.storage.all()[args[0] + "." +args[1]]
                     all_objects.pop(i)
-                    storage_obj.save()
+                    models.storage.save()
         print("** no instance found **")
-    
+
     def do_all(self, line_args_obj):
         """
          Prints all string representation of all instances
          based or not on the class name.
+         Ex: $ all BaseModel or $ all
         """
-        args = line_args_obj.split(' ')
+        args = line_args_obj.split()
         "COMMENT: impresion de un lista de cadena de los objetos almacenados"
         if len(args) == 0:
-            all_objects = storage_obj.all()
-            for i in all_objects:
-                args_str = str(all_objects[i])
-                print(args_str)
-        elif line_args_obj not in self.my_classes:
+            print('["', end="")
+            flag = 0
+            all_objects = models.storage.all()
+            for i in all_objects.keys():
+                if flag == 1:
+                    print('", "', end="")
+                obj = all_objects[i]
+                print(obj, end="")
+                flag = 1
+            print('"]')
+        elif args[0] not in classes.keys():
             "COMMENT: si es nombre de la clase no esta"
             print("** class doesn't exist **")
         elif line_args_obj in classes:
             "COMMENT: imprimiremos la representacion en cadena de todos los objetos(incluido los que estan ingresando(comparando el valor inicial del objeto ingresado)) basados o no en el nombre de la clase"
-            all_objects = storage_obj.all()
+            print('["', end="")
+            flag = 0
+            all_objects = models.storage.all()
             for i in all_objects.keys():
                 if i.startswith(args[0]):
-                    args_str = str(all_objects[i])
-                    print(args_str)        
+                    if flag == 1:
+                        print('", "', end="")
+                    obj = all_objects[i]
+                    print(obj, end="")
+                    flag = 1
+            print('"]')
 
     def do_update(self, line_args_obj):
         """
@@ -98,8 +114,7 @@ class HBNBCommand(cmd.Cmd):
         if len(line_args_obj) < 1:
             print("** class name missing **")
         elif ("no entiendo: Si el valor del nombre del atributo no existe, imprima"):
-            print("** value missing **")           
-
+            print("** value missing **")
 
     def emptyline(self, args):
         "method that is called when an empty line is entered"
@@ -111,11 +126,20 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         "End-of-file command to exit the console"
-        return true
-    
+        sys.exit(1)
+
     def do_quit(self, args):
         "Quit command to exit the program"
-        return true
+        return True
+
+    def help_quit(self):
+        print("syntax: quit")
+        print("--Terminates the application")
+
+    def help_EOF(self):
+        print("syntax: EOF")
+        print("--Terminates the application")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
