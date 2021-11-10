@@ -71,6 +71,23 @@ class HBNBCommand(cmd.Cmd):
          Prints all string representation of all instances
          based or not on the class name.
         """
+        args = line_args_obj.split(' ')
+        "COMMENT: impresion de un lista de cadena de los objetos almacenados"
+        if len(args) == 0:
+            all_objects = storage_obj.all()
+            for i in all_objects:
+                args_str = str(all_objects[i])
+                print(args_str)
+        elif line_args_obj not in self.my_classes:
+            "COMMENT: si es nombre de la clase no esta"
+            print("** class doesn't exist **")
+        elif line_args_obj in classes:
+            "COMMENT: imprimiremos la representacion en cadena de todos los objetos(incluido los que estan ingresando(comparando el valor inicial del objeto ingresado)) basados o no en el nombre de la clase"
+            all_objects = storage_obj.all()
+            for i in all_objects.keys():
+                if i.startswith(args[0]):
+                    args_str = str(all_objects[i])
+                    print(args_str)        
 
     def do_update(self, line_args_obj):
         """
