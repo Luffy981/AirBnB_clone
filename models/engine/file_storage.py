@@ -8,7 +8,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
-from models.review import BaseModel
+from models.review import Review
 
 
 
@@ -30,8 +30,6 @@ class FileStorage:
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
-            # ex: to store a BaseModel object with id=12121212
-            # the key will be BaseModel.12121212
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 

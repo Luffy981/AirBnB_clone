@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """modulo cmd"""
 import cmd
-from models import storage_obj
+from models import storage
 import json
 from models.base_model import BaseModel
 import sys
@@ -110,11 +110,25 @@ class HBNBCommand(cmd.Cmd):
         Updates an instance based on the class name and id by
         adding or updating attribute (save the change into the JSON file)
         """
-        args_cut = line_args.split(' ')
+        args = line_args.split()
         if len(line_args_obj) < 1:
             print("** class name missing **")
-        elif ("no entiendo: Si el valor del nombre del atributo no existe, imprima"):
+        elif args[0] not in classes.keys():
+            "COMMENT: si es nombre de la clase no esta"
+            print("** class doesn't exist **")
+        elif len(args) < 2:
+            print("** instance id missing **")
+
+        "Si este nombre y id no estan dentro de nuestro obj(almacenamiento)"
+        key_first = "{}.{}".format(args[0], args[1])
+        if key_first not in models.storage.all():
+            print("** no instance found **")
+
+        if len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
             print("** value missing **")
+
 
     def emptyline(self, args):
         "method that is called when an empty line is entered"
