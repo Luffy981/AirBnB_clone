@@ -12,7 +12,7 @@ date = "%Y-%m-%dT%H:%M:%S.%f"
 class BaseModel:
     def __init__(self, *args, **kwargs):
         self.id = str(uuid.uuid4())
-        if kwargs is not None:
+        if kwargs is not None and kwargs != {}:
             for key in kwargs:
                 if key != '__class__':
                     setattr(self, key, kwargs[key])
@@ -43,5 +43,5 @@ class BaseModel:
             dictionary["created_at"] = dictionary["created_at"].strftime(date)
         if "updated_at" in dictionary:
             dictionary["updated_at"] = dictionary["updated_at"].strftime(date)
-        dictionary[self.__class__.__name__] = self.__class__.__name__
+        dictionary["__class__"] = self.__class__.__name__
         return dictionary
