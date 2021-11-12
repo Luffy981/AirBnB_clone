@@ -65,20 +65,21 @@ class HBNBCommand(cmd.Cmd):
         (save the change into the JSON file)
         """
         args = line_args_obj.split()
-        if line_args_obj == "" or line_args_obj is None:
+        if len(line_args_obj) == 0:
             print("** class name missing **")
         elif args[0] not in classes.keys():
             print("** class doesn't exist **")
-        if len(args) < 2:
+        elif len(args) < 2:
             print("** instance id missing **")
         else:
             all_objects = models.storage.all()
             for i in all_objects:
                 if i == "{}.{}".format(args[0], args[1]):
-                    # del models.storage.all()[args[0] + "." +args[1]]
-                    all_objects.pop(i)
+                    # # del models.storage.all()[args[0] + "." +args[1]]
+                    del all_objects[str(i)]
                     models.storage.save()
-        print("** no instance found **")
+                    return False
+            print("** no instance found **")
 
     def do_all(self, line_args_obj):
         """
@@ -121,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
         Updates an instance based on the class name and id by
         adding or updating attribute (save the change into the JSON file)
         """
-        args = line_args.split()
+        args = line_args_obj.split()
         invalid_update = ["id", "created_at", "updated_at"]
         if len(line_args_obj) < 1:
             print("** class name missing **")
@@ -141,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 4:
             print("** value missing **")
         elif args[2] not in invalid_update:
-            ojb = models.storage.all()[key_first]
+            obj = models.storage.all()[key_first]
             print(obj.__dict__)
             obj.__dict__[args[2]] = args[3]
             print(obj.__dict__[args[2]])
@@ -150,7 +151,7 @@ class HBNBCommand(cmd.Cmd):
 
 
 
-    def emptyline(self, args):
+    def emptyline(self):
         "method that is called when an empty line is entered"
         pass
 
@@ -163,7 +164,7 @@ class HBNBCommand(cmd.Cmd):
         sys.exit(1)
 
     def do_quit(self, args):
-        "Quit command to exit the program"
+       "Quit command to exit the program"
         return True
 
     def help_quit(self):
