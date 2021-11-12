@@ -111,6 +111,7 @@ class HBNBCommand(cmd.Cmd):
         adding or updating attribute (save the change into the JSON file)
         """
         args = line_args.split()
+        invalid_update = ["id", "created_at", "updated_at"]
         if len(line_args_obj) < 1:
             print("** class name missing **")
         elif args[0] not in classes.keys():
@@ -128,6 +129,14 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
         elif len(args) < 4:
             print("** value missing **")
+        elif args[2] not in invalid_update:
+            ojb = models.storage.all()[key_first]
+            print(obj.__dict__)
+            obj.__dict__[args[2]] = args[3]
+            print(obj.__dict__[args[2]])
+            obj.updated_at = datetime.now()
+            obj.save()
+
 
 
     def emptyline(self, args):
