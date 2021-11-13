@@ -16,6 +16,11 @@ This project is the first step towards building our first complete web applicati
 <p align="center"><img src="https://user-images.githubusercontent.com/68792144/141603834-c71c3105-49e4-4dcd-b245-e07dacec0a78.jpg" width="700"></p>
 
 ## Instalación :key:
+[git clone](https://github.com/Luffy981/AirBnB_clone) to install this repository
+
+```
+git clone https://github.com/Luffy981/AirBnB_clone
+```
 
 ## Use :wrench:
 
