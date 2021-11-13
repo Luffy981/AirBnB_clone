@@ -153,7 +153,7 @@ class Test_Class_BaseModel(unittest.TestCase):
         new_updated_at = instance6.updated_at
         self.assertNotEqual(updated_at, new_updated_at)
         self.assertEqual(created_at,new_created_at)
-        self.assertTrue(mock_storage.save.callemock_storage.save.called)
+        self.assertTrue(mock_storage.save.called)
 
 
 
