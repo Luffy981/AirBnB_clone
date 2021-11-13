@@ -116,16 +116,5 @@ class Test_Class_BaseModel(unittest.TestCase):
         self.assertNotEqual(instance1.id, instance3.id)
         self.assertNotEqual(instance2.id, instance3.id)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    unittest.main
