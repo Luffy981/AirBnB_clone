@@ -149,8 +149,6 @@ class HBNBCommand(cmd.Cmd):
             obj.updated_at = datetime.now()
             obj.save()
 
-
-
     def emptyline(self):
         "method that is called when an empty line is entered"
         pass
@@ -161,10 +159,11 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         "End-of-file command to exit the console"
+        print()
         sys.exit(1)
 
     def do_quit(self, args):
-       "Quit command to exit the program"
+        "Quit command to exit the program"
         return True
 
     def help_quit(self):

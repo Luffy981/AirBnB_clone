@@ -20,16 +20,16 @@ class TestCodeFormat(unittest.TestCase):
         Test pep8 format
         """
         pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.chech_files(['models/base_model.py'])
+        result = pep8style.check_files(['models/base_model.py'])
         self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings)."
+                         "Found code style errors (and warnings).")
 
     def test_pycodestyle(self):
         """
         Test pep8 format
         """
         pycostyle = pycostyle.StyleGuide(quiet=True)
-        result = pycostyle.chech_files(['models/base_model.py'])
+        result = pycostyle.check_files(['models/base_model.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -116,54 +116,5 @@ class Test_Class_BaseModel(unittest.TestCase):
         self.assertNotEqual(instance1.id, instance3.id)
         self.assertNotEqual(instance2.id, instance3.id)
 
-    def test_to_dictionary(self):
-        """
-        Test to_dict method
-        """
-        instance4 = BaseModel()
-        instance4.name = "OnePiece"
-        instance4.number = 123
-        new_inst = instance4.to_dict()
-        expected = ["id", "created_at", "updated_at", "name", "number",
-                    "__class__"]
-        self.assertCountEqual(new_inst.keys(), expected)
-        self.assertEqual(new_inst['__class__'], 'BaseModel')
-        self.assertEqual(new_inst['name'], 'OnePiece')
-        self.assertEqual(new_inst['number'], 123)
-
-    def test_magic_method_str(self):
-        """
-        Test STR method
-        """
-        instance5 = BaseModel()
-        text = "[BaseModel] ({}) {}"
-        str_output = text.format(instance5.id, instance5.__dict__)
-        self.assertEqual(str_output, str(instance5))
-
-    @mock.patch('models.storage')
-    def test_save_method(self, mock_storage):
-        """
-        Test save method
-        """
-        instance6 = BaseModel()
-        created_at = instance6.created_at
-        updated_at = instance6.updated_at
-        instance6.save()
-        new_created_at = instance6.created_at
-        new_updated_at = instance6.updated_at
-        self.assertNotEqual(updated_at, new_updated_at)
-        self.assertEqual(created_at,new_created_at)
-        self.assertTrue(mock_storage.save.called)
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    unittest.main
