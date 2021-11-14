@@ -63,7 +63,8 @@ class Test_docstrings(unittest.TestCase):
         """
         Test for exist module docstrings
         """
-        self.assertIsNotNone(console.__doc__, "console.py file needs a docstrings")
+        self.assertIsNotNone(console.__doc__,
+                             "console.py file needs a docstrings")
         self.assertTrue(len(__doc__) > 0, "console.py have docstrings")
         self.assertTrue(len(__doc__) > 0, " console don't have docstrings")
         self.assertIsNotNone(HBNBCommand.do_show.__doc__)
@@ -355,12 +356,13 @@ class ShowTest(unittest.TestCase):
         self.assertNotEqual(f.getvalue(), '')
         with patch('sys.stdout', new=StringIO()) as f:
             expectect = "*** Unknown syntax: asdasd.update()\n"
-            HBNBCommand().onecmd("asdasd.update()".format(id))
+            HBNBCommand().onecmd("asdasd.update()")
         self.assertEqual(f.getvalue(), expectect)
         with patch('sys.stdout', new=StringIO()) as f:
             expectect = "*** Unknown syntax: User.update()\n"
-            HBNBCommand().onecmd("User.update()".format(id))
+            HBNBCommand().onecmd("User.update()")
         self.assertEqual(f.getvalue(), expectect)
+
 
 if __name__ == '__main__':
     unittest.main()
