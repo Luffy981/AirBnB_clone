@@ -49,7 +49,7 @@ class test_Review_BaseModel(unittest.TestCase):
     def test_instances(self):
         with patch('models.review'):
             instance = Review()
-            instance.assertEqual(type(instance), City)
+            instance.assertEqual(type(instance), Review)
             instance.place_id = "3344"
             instance.text = "SiliconValley"
             expectec_attrs_types = {
