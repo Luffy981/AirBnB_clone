@@ -149,8 +149,7 @@ class HBNBCommand(cmd.Cmd):
         key_first = "{}.{}".format(args[0], args[1])
         if key_first not in models.storage.all():
             print("** no instance found **")
-
-        if len(args) < 3:
+        elif len(args) < 3:
             print("** attribute name missing **")
         elif len(args) < 4:
             print("** value missing **")
