@@ -167,12 +167,10 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def help_quit(self):
-        print("syntax: quit")
-        print("--Terminates the application")
+        print("Quit command to exit the program\n")
 
     def help_EOF(self):
-        print("syntax: EOF")
-        print("--Terminates the application")
+        print("End of File command: exit the program\n")
 
 
 if __name__ == '__main__':
