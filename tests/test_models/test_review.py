@@ -71,7 +71,7 @@ class test_Review_BaseModel(unittest.TestCase):
             self.assertCountEqual(inst_dict.keys(), expected_dict_attrs)
             self.assertEqual(inst_dict['place_id'], '3344')
             self.assertEqual(inst_dict['text'], "SiliconValley")
-            self.assertEqual(inst_dict['__class__'], 'Amenity')
+            self.assertEqual(inst_dict['__class__'], 'Review')
 
             for attr, types in expectec_attrs_types.items():
                 with self.suTest(attr=attr, typ=types):
