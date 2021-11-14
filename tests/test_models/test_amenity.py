@@ -51,7 +51,6 @@ class test_Amenity_BaseModel(unittest.TestCase):
             instance = Amenity()
             instance.assertEqual(type(instance), Amenity)
             instance.name = "OnePiece"
-            instance.last_name = "monkey"
             expectec_attrs_types = {
                     "id": str,
                     "created_at": datetime,
