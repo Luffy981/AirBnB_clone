@@ -48,6 +48,7 @@ class HBNBCommand(cmd.Cmd):
         args = line_args_obj.split()
         if line_args_obj == "" or line_args_obj is None:
             print("** class name missing **")
+            return
         elif args[0] not in classes.keys():
             print("** class doesn't exist **")
             return False
@@ -68,10 +69,13 @@ class HBNBCommand(cmd.Cmd):
         args = line_args_obj.split()
         if len(line_args_obj) == 0:
             print("** class name missing **")
+            return
         elif args[0] not in classes.keys():
             print("** class doesn't exist **")
+            return
         elif len(args) < 2:
             print("** instance id missing **")
+            return
         else:
             all_objects = models.storage.all()
             for i in all_objects:
@@ -176,9 +180,11 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def help_quit(self):
+        """help_quit"""
         print("Quit command to exit the program\n")
 
     def help_EOF(self):
+        """help_EOF"""
         print("End of File command: exit the program\n")
 
 

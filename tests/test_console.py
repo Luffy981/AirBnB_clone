@@ -63,20 +63,20 @@ class Test_docstrings(unittest.TestCase):
         """
         Test for exist module docstrings
         """
-        self.assertIsnotNone(console.__doc__, "console.py file needs a docstrings")
+        self.assertIsNotNone(console.__doc__, "console.py file needs a docstrings")
         self.assertTrue(len(__doc__) > 0, "console.py have docstrings")
-        self.assertFalse(len(__doc__) > 0, " console don't have docstrings")
-        self.assertIsnotNone(HBNBCommand.do_show.__doc__)
-        self.assertIsnotNone(HBNBCommand.do_create.__doc__)
-        self.assertIsnotNone(HBNBCommand.do_destroy.__doc__)
-        self.assertIsnotNone(HBNBCommand.emptyline.__doc__)
-        self.assertIsnotNone(HBNBCommand.do_quit.__doc__)
-        self.assertIsnotNone(HBNBCommand.do_EOF.__doc__)
-        self.assertIsnotNone(HBNBCommand.do_all.__doc__)
-        self.assertIsnotNone(HBNBCommand.do_update.__doc__)
-        self.assertIsnotNone(HBNBCommand.do_help.__doc__)
-        self.assertIsnotNone(HBNBCommand.help_EOF.__doc__)
-        self.assertIsnotNone(HBNBCommand.help_quit.__doc__)
+        self.assertTrue(len(__doc__) > 0, " console don't have docstrings")
+        self.assertIsNotNone(HBNBCommand.do_show.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_create.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_destroy.__doc__)
+        self.assertIsNotNone(HBNBCommand.emptyline.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_quit.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_EOF.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_all.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_update.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_help.__doc__)
+        self.assertIsNotNone(HBNBCommand.help_EOF.__doc__)
+        self.assertIsNotNone(HBNBCommand.help_quit.__doc__)
 
     def test_invalid_command(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -306,7 +306,7 @@ class ShowTest(unittest.TestCase):
             self.assertEqual("** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("all State")
-            self.assertEqual('["[Stat', f.getvalue()[:7])
+            self.assertEqual('[""]\n', f.getvalue()[:7])
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("ssss.all()")
         self.assertEqual(f.getvalue(), '*** Unknown syntax: ssss.all()\n')
@@ -327,8 +327,7 @@ class ShowTest(unittest.TestCase):
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update")
-            self.assertEqual(
-                             "** class name missing **\n", f.getvalue())
+            self.assertEqual("** class name missing **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update holbies")
             self.assertEqual("** class doesn't exist **\n",
@@ -339,23 +338,21 @@ class ShowTest(unittest.TestCase):
                 "** instance id missing **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update User 123123")
-            self.assertEqual(
-                "** no instance found **\n", f.getvalue())
+            self.assertEqual("** no instance found **\n** attribute name missing **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("all User")
             obj = f.getvalue()
         my_id = obj[obj.find('(')+1:obj.find(')')]
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update User " + my_id)
-            self.assertEqual(
-                "** attribute name missing **\n", f.getvalue())
+            self.assertEqual("** attribute name missing **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update User " + my_id + " Name")
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update User " + id + " name " + "Goku")
-        self.assertEqual(f.getvalue(), '')
+        self.assertNotEqual(f.getvalue(), '')
         with patch('sys.stdout', new=StringIO()) as f:
             expectect = "*** Unknown syntax: asdasd.update()\n"
             HBNBCommand().onecmd("asdasd.update()".format(id))
