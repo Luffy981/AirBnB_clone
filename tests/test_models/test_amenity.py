@@ -31,7 +31,7 @@ class test_docstrings(unittest.TestCase):
 
     def test_docstrings(self):
         """test documentation"""
-        self.assertIsNotNone(Amenity.__doc__, "user.py needsa docstring")
+        self.assertIsNotNone(Amenity.__doc__, "amenity.py needs a docstring")
 
 
 class test_inherit_basemodel(unittest.TestCase):
