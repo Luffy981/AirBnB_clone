@@ -329,7 +329,7 @@ class ShowTest(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update")
             self.assertEqual(
-                "** class name missing **\n", f.getvalue())
+                             "** class name missing **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update holbies")
             self.assertEqual("** class doesn't exist **\n",
