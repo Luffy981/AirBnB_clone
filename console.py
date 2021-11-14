@@ -132,11 +132,14 @@ class HBNBCommand(cmd.Cmd):
         invalid_update = ["id", "created_at", "updated_at"]
         if len(line_args_obj) < 1:
             print("** class name missing **")
+            return
         elif args[0] not in classes.keys():
             "COMMENT: si es nombre de la clase no esta"
             print("** class doesn't exist **")
+            return
         elif len(args) < 2:
             print("** instance id missing **")
+            return
 
         "Si este nombre y id no estan dentro de nuestro obj(almacenamiento)"
         key_first = "{}.{}".format(args[0], args[1])

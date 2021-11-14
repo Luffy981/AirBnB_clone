@@ -11,7 +11,6 @@ from unittest.mock import MagicMock
 import console
 import tests
 from console import HBNBCommand
-from console import __doc__
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -64,9 +63,9 @@ class Test_docstrings(unittest.TestCase):
         """
         Test for exist module docstrings
         """
-        self.assertIsnotNone(__doc__, "base_model.py file needs a docstrings")
-        self.assertTrue(len(__doc__) > 0, " base_model.py have docstrings")
-        self.assertFalse(len(__doc__) > 0, " base_model don't have docstrings")
+        self.assertIsnotNone(console.__doc__, "console.py file needs a docstrings")
+        self.assertTrue(len(__doc__) > 0, "console.py have docstrings")
+        self.assertFalse(len(__doc__) > 0, " console don't have docstrings")
         self.assertIsnotNone(HBNBCommand.do_show.__doc__)
         self.assertIsnotNone(HBNBCommand.do_create.__doc__)
         self.assertIsnotNone(HBNBCommand.do_destroy.__doc__)
