@@ -34,7 +34,7 @@ class TestUser(unittest.TestCase):
         self.assertTrue(issubclass(type(user), BaseModel))
         self.assertEqual(str(type(user)), "<class 'models.user.User'>")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
 
     
