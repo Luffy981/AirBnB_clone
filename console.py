@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """modulo cmd"""
 import cmd
-from models import storage
+from models.engine.file_storage import FileStorage
 import json
 from datetime import datetime
 import sys
@@ -15,7 +15,8 @@ from models.user import User
 import models
 
 
-classes = {"BaseModel": BaseModel, "User": User, "State": State, "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
+classes = {"BaseModel": BaseModel, "User": User, "State": State, "City": City,
+           "Amenity": Amenity, "Place": Place, "Review": Review}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -104,7 +105,12 @@ class HBNBCommand(cmd.Cmd):
             "COMMENT: si es nombre de la clase no esta"
             print("** class doesn't exist **")
         elif line_args_obj in classes:
-            "COMMENT: imprimiremos la representacion en cadena de todos los objetos(incluido los que estan ingresando(comparando el valor inicial del objeto ingresado)) basados o no en el nombre de la clase"
+            """
+            COMMENT: imprimiremos la representacion en cadena de todos
+            los objetos(incluido los que estan ingresando(comparando
+            el valor inicial del objeto ingresado)) basados o no en
+            el nombre de la clase"
+            """
             print('["', end="")
             flag = 0
             all_objects = models.storage.all()

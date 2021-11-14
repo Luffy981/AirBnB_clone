@@ -3,7 +3,7 @@
 Test Console
 """
 import pycodestyle
-import pep8
+# import pep8
 import unittest
 import inspect
 from unittest.mock import patch
@@ -12,14 +12,14 @@ import console
 import tests
 from console import HBNBCommand
 from console import __doc__
-from models.base_model import Basemodel
+from models.base_model import BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.engine.file_storage import Filestorage
+from models.engine.file_storage import FileStorage
 import json
 from io import StringIO
 import os
@@ -28,14 +28,14 @@ import os
 class TestCodeFormat(unittest.TestCase):
     """
     A class to test pep8 on base_model file"""
-    def test_pep8(self):
-        """
-        Test pep8 format
-        """
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['console.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    # def test_pep8(self):
+    #     """
+    #     Test pep8 format
+    #     """
+    #     pep8style = pep8.StyleGuide(quiet=True)
+    #     result = pep8style.check_files(['console.py'])
+    #     self.assertEqual(result.total_errors, 0,
+    #                      "Found code style errors (and warnings).")
 
     def test_pycodestyle(self):
         """
@@ -366,3 +366,5 @@ class ShowTest(unittest.TestCase):
             HBNBCommand().onecmd("User.update()".format(id))
         self.assertEqual(f.getvalue(), expectect)
 
+if __name__ == '__main__':
+    unittest.main()

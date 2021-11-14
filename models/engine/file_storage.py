@@ -50,7 +50,8 @@ class FileStorage:
         try:
             with open(self.__file_path, 'r', encoding='UTF-8') as file:
                 js = json.load(file)
-            for key in js:
-                self.__objects[key] = classes[js[key]["__class__"]](**js[key])
+            for key, value in js.items():
+                reloadobj = eval('{}(**value)'.format(value['__class__']))
+                self.__objects[key] = reloadobj
         except FileNotFoundError:
             pass
