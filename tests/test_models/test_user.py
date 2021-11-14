@@ -2,7 +2,10 @@
 """module for testing user class"""
 import unittest
 from models.user import User
-import pep8
+from models.base_model import BaseModel
+import pycodestyle
+# import pep8
+
 
 
 class TestUser(unittest.TestCase):
@@ -10,7 +13,7 @@ class TestUser(unittest.TestCase):
 
     def test_pep8_user(self):
         """test pep8 style"""
-        pep8style = pep8.StyleGuide(quiet=true)
+        pep8style = pycodestyle.StyleGuide(quiet=True)
         result = pep8style.check_files(['models/user.py'])
         self.assertEqual(result.total_errors, 0,
                         "Found code style errors (and warnings).")
@@ -25,12 +28,12 @@ class TestUser(unittest.TestCase):
 
     def test_docstrings(self):
         """test documentation"""
-        self.assertIsnotNone(User.__doc__)
+        self.assertIsNotNone(User.__doc__)
 
     def test_instance(self):
         """check if user is an instance of BaseModel"""
         user = User()
-        self.assertIsIntance(user, User)
+        self.assertIsInstance(user, User)
         self.assertTrue(issubclass(type(user), BaseModel))
         self.assertEqual(str(type(user)), "<class 'models.user.User'>")
 

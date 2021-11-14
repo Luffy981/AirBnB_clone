@@ -6,7 +6,8 @@ from models.state import State
 from models.base_model import BaseModel
 from datetime import datetime
 from uuid import UUID
-import pep8
+import pycodestyle
+# import pep8
 
 
 class Test_State(unittest.TestCase):
@@ -14,7 +15,7 @@ class Test_State(unittest.TestCase):
 
     def test_pep8_state(self):
         """test pep8 style"""
-        pep8style = pep8.StyleGuide(quiet=True)
+        pep8style = pycodestyle.StyleGuide(quiet=True)
         result = pep8style.check_files(['models/state.py'])
         self.assertEqual(result.total_errors, 0,
                         "Found code style errors (and warnings).")
