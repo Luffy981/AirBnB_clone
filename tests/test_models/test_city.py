@@ -3,7 +3,7 @@
 import unittest
 from datetime import datetime
 from time import sleep
-from models.amenity import City
+from models.city import City
 from models.base_model import BaseModel
 from unittest.mock import patch
 import pycodestyle
