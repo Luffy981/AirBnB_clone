@@ -13,7 +13,7 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize BaseModel"""
         if kwargs is not None and kwargs != {}:
-            for key in kwargs:
+            for key in kwargs.keys():
                 if key != '__class__':
                     setattr(self, key, kwargs[key])
             if hasattr(self, 'created_at') and type(self.created_at) is str:
