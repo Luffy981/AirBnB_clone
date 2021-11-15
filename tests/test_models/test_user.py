@@ -56,58 +56,58 @@ class test_inherit_basemodel(unittest.TestCase):
 
 class test_User(unittest.TestCase):
     """Testing user class"""
-    def test_instances(self):
-        with patch('models.user'):
-            instance = User()
-            instance.assertEqual(type(instance), User)
-            instance.name = "OnePiece"
-            instance.number = 981
-            instance.email = "treasure@anime.com"
-            instance.password = "smile"
-            instance.first_name = "luffy"
-            instance.last_name = "monkey"
-            expectec_attrs_types = {
-                    "id": str,
-                    "created_at": datetime,
-                    "updated_at": datetime,
-                    "name": str,
-                    "number": int,
-                    "email": str,
-                    "password": str,
-                    "first_name": str,
-                    "last_name": str
-                    }
-            inst_dict = instance.to_dict()
-            expected_dict_attrs = [
-                    "id",
-                    "created_at",
-                    "updated_at",
-                    "name",
-                    "number",
-                    "email",
-                    "password",
-                    "first_name",
-                    "last_name"
-                    "__class__"
-                    ]
-            self.assertCountEqual(inst_dict.keys(), expected_dict_attrs)
-            self.assertEqual(inst_dict['name'], 'OnePiece')
-            self.assertEqual(inst_dict['number'], 981)
-            self.assertEqual(inst_dict['email'], 'treasur@anime.com')
-            self.assertEqual(inst_dict['password'], 'smile')
-            self.assertEqual(inst_dict['first_name'], 'luffy')
-            self.assertEqual(inst_dict['last_name'], 'monkey')
-            self.assertEqual(inst_dict['__class__'], 'User')
+    @patch('models.user')
+    def test_instances(self, mock_storage):
+        instance = User()
+        self.assertEqual(type(instance), User)
+        instance.name = "OnePiece"
+        instance.number = 981
+        instance.email = "treasure@anime.com"
+        instance.password = "smile"
+        instance.first_name = "luffy"
+        instance.last_name = "monkey"
+        expectec_attrs_types = {
+                "id": str,
+                "created_at": datetime,
+                "updated_at": datetime,
+                "name": str,
+                "number": int,
+                "email": str,
+                "password": str,
+                "first_name": str,
+                "last_name": str
+                }
+        inst_dict = instance.to_dict()
+        expected_dict_attrs = [
+                "id",
+                "created_at",
+                "updated_at",
+                "name",
+                "number",
+                "email",
+                "password",
+                "first_name",
+                "last_name",
+                "__class__"
+                ]
+        self.assertCountEqual(inst_dict.keys(), expected_dict_attrs)
+        self.assertEqual(inst_dict['name'], 'OnePiece')
+        self.assertEqual(inst_dict['number'], 981)
+        self.assertEqual(inst_dict['email'], 'treasure@anime.com')
+        self.assertEqual(inst_dict['password'], 'smile')
+        self.assertEqual(inst_dict['first_name'], 'luffy')
+        self.assertEqual(inst_dict['last_name'], 'monkey')
+        self.assertEqual(inst_dict['__class__'], 'User')
 
-            for attr, types in expectec_attrs_types.items():
-                with self.suTest(attr=attr, typ=types):
-                    self.assertIn(attr, instance.__dict__)
-                    self.assertIs(type(instance.__dict__[attr], types))
-            self.assertEqual(instance.name, "OnePiece")
-            self.assertEqual(instance.number, 981)
-            self.assertEqual(instance.email, "treasure@anime.com")
-            self.assertEqual(instance.first_name, "luffy")
-            self.assertEqual(instance.last_name, "monkey")
+        for attr, types in expectec_attrs_types.items():
+            with self.subTest(attr=attr, typ=types):
+                self.assertIn(attr, instance.__dict__)
+                self.assertIs(type(instance.__dict__[attr]), types)
+        self.assertEqual(instance.name, "OnePiece")
+        self.assertEqual(instance.number, 981)
+        self.assertEqual(instance.email, "treasure@anime.com")
+        self.assertEqual(instance.first_name, "luffy")
+        self.assertEqual(instance.last_name, "monkey")
 
     def test_user_id_and_createat(self):
         """testing id for every user"""
@@ -145,13 +145,13 @@ class test_User(unittest.TestCase):
         instance5 = User()
         created_at = instance5.created_at
         sleep(2)
-        updated_at = instance5.updated_at()
+        updated_at = instance5.updated_at
         instance5.save()
         new_created_at = instance5.created_at
         sleep(2)
         new_updated_at = instance5.updated_at
         self.assertNotEqual(updated_at, new_updated_at)
-        self.assertNotEqual(created_at, new_created_at)
+        self.assertEqual(created_at, new_created_at)
         self.assertTrue(mock_storage.save.called)
 
 
