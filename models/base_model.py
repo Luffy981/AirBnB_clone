@@ -46,3 +46,4 @@ class BaseModel:
             dictionary["updated_at"] = dictionary["updated_at"].strftime(date)
         dictionary["__class__"] = self.__class__.__name__
         return dictionary
+o
