@@ -62,7 +62,7 @@ $
 ## On the console
 
 Commands | Description | Example
-------- | -------
+--------- | ------- | -------
 -- | Run the console | ```./console.py```
 quit | Quit the console | ```(hbnb) quit```
 help + command | Display the help for a command | ```(hbnb) help <command>```
