@@ -57,7 +57,7 @@ class Test_Class_BaseModel(unittest.TestCase):
         self.assertIs(type(instance), BaseModel)
         instance.name = "MonkeyDLuffy"
         instance.email = "luffy@outlook.com"
-        instance.number = 981
+        instance.number = 300
         expectec_attrs_types = {
             "id": str,
             "created_at": datetime,
