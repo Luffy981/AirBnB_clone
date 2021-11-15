@@ -11,6 +11,7 @@ date = "%Y-%m-%dT%H:%M:%S.%f"
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
+        """Initialize BaseModel"""
         if kwargs is not None and kwargs != {}:
             for key in kwargs:
                 if key != '__class__':
@@ -37,6 +38,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
+        """Instance to_dictionary"""
         dictionary = self.__dict__.copy()
         if "created_at" in dictionary:
             dictionary["created_at"] = dictionary["created_at"].strftime(date)
