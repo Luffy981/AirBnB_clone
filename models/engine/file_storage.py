@@ -11,7 +11,8 @@ from models.place import Place
 from models.review import Review
 
 
-classes = {"BaseModel": BaseModel}
+classes = {"BaseModel": BaseModel, "User": User, "State": State,
+           "Amenity": Amenity, "Place": Place, "City": City, "Review": Review}
 
 
 class FileStorage:
@@ -50,7 +51,7 @@ class FileStorage:
             with open(self.__file_path, 'r', encoding='UTF-8') as file:
                 js = json.load(file)
             for key, value in js.items():
-                reloadobj = eval('{}(**value)'.format(value['__class__']))
+                reloadobj = classes[js[key]["__class__"]](**js[key])
                 self.__objects[key] = reloadobj
         except FileNotFoundError:
             pass
