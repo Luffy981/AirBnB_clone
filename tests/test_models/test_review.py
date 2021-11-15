@@ -49,7 +49,7 @@ class test_Review_BaseModel(unittest.TestCase):
     def test_instances(self):
         with patch('models.review'):
             instance = Review()
-            instance.assertEqual(type(instance), Review)
+            self.assertEqual(type(instance), Review)
             instance.place_id = "3344"
             instance.text = "SiliconValley"
             expectec_attrs_types = {
@@ -74,9 +74,9 @@ class test_Review_BaseModel(unittest.TestCase):
             self.assertEqual(inst_dict['__class__'], 'Review')
 
             for attr, types in expectec_attrs_types.items():
-                with self.suTest(attr=attr, typ=types):
+                with self.subTest(attr=attr, typ=types):
                     self.assertIn(attr, instance.__dict__)
-                    self.assertIs(type(instance.__dict__[attr], types))
+                    self.assertIs(type(instance.__dict__[attr]), types)
             self.assertEqual(instance.place_id, "3344")
             self.assertEqual(instance.text, "SiliconValley")
 
@@ -116,13 +116,13 @@ class test_Review_BaseModel(unittest.TestCase):
         instance5 = Review()
         created_at = instance5.created_at
         sleep(2)
-        updated_at = instance5.updated_at()
+        updated_at = instance5.updated_at
         instance5.save()
         new_created_at = instance5.created_at
         sleep(2)
         new_updated_at = instance5.updated_at
         self.assertNotEqual(updated_at, new_updated_at)
-        self.assertNotEqual(created_at, new_created_at)
+        self.assertEqual(created_at, new_created_at)
         self.assertTrue(mock_storage.save.called)
 
 
