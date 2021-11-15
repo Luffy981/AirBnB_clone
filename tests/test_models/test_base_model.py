@@ -55,7 +55,7 @@ class Test_Class_BaseModel(unittest.TestCase):
         self.assertEqual(type(instance), BaseModel)
         self.assertTrue(type(instance) == BaseModel)
         self.assertIs(type(instance), BaseModel)
-        instance.name = "MonkeyDLuffy"
+        instance.name = "Monkey"
         instance.email = "luffy@outlook.com"
         instance.number = 300
         expectec_attrs_types = {
