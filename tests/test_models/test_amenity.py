@@ -49,7 +49,7 @@ class test_Amenity_BaseModel(unittest.TestCase):
     def test_instances(self):
         with patch('models.amenity'):
             instance = Amenity()
-            instance.assertEqual(type(instance), Amenity)
+            self.assertEqual(type(instance), Amenity)
             instance.name = "OnePiece"
             expectec_attrs_types = {
                     "id": str,
@@ -70,9 +70,9 @@ class test_Amenity_BaseModel(unittest.TestCase):
             self.assertEqual(inst_dict['__class__'], 'Amenity')
 
             for attr, types in expectec_attrs_types.items():
-                with self.suTest(attr=attr, typ=types):
+                with self.subTest(attr=attr, typ=types):
                     self.assertIn(attr, instance.__dict__)
-                    self.assertIs(type(instance.__dict__[attr], types))
+                    self.assertIs(type(instance.__dict__[attr]), types)
             self.assertEqual(instance.name, "OnePiece")
 
     def test_user_id_and_createat(self):
@@ -111,13 +111,13 @@ class test_Amenity_BaseModel(unittest.TestCase):
         instance5 = Amenity()
         created_at = instance5.created_at
         sleep(2)
-        updated_at = instance5.updated_at()
+        updated_at = instance5.updated_at
         instance5.save()
         new_created_at = instance5.created_at
         sleep(2)
         new_updated_at = instance5.updated_at
         self.assertNotEqual(updated_at, new_updated_at)
-        self.assertNotEqual(created_at, new_created_at)
+        self.assertEqual(created_at, new_created_at)
         self.assertTrue(mock_storage.save.called)
 
 
