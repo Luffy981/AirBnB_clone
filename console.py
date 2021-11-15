@@ -161,6 +161,19 @@ class HBNBCommand(cmd.Cmd):
             obj.updated_at = datetime.now()
             obj.save()
 
+    def do_count(self, line_args_obj):
+        args = line_args_obj.split()
+        if args[0] not in classes:
+            return
+        else:
+            count = 0
+            keys = models.storage.all().keys()
+            for key in keys:
+                lenght = len(args[0])
+                if key[:lenght] == args[0]:
+                    count += 1
+            print(count)
+
     def emptyline(self):
         "method that is called when an empty line is entered"
         pass
@@ -172,7 +185,7 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, args):
         "End-of-file command to exit the console"
         print()
-        sys.exit(1)
+        return True
 
     def do_quit(self, args):
         "Quit command to exit the program"
