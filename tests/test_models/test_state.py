@@ -74,7 +74,7 @@ class test_State_BaseModel(unittest.TestCase):
     def test_instances(self):
         with patch('models.state'):
             instance = State()
-            instance.assertEqual(type(instance), State)
+            self.assertEqual(type(instance), State)
             instance.name = "SiliconValley"
             expectec_attrs_types = {
                     "id": str,
@@ -95,9 +95,9 @@ class test_State_BaseModel(unittest.TestCase):
             self.assertEqual(inst_dict['__class__'], 'State')
 
             for attr, types in expectec_attrs_types.items():
-                with self.suTest(attr=attr, typ=types):
+                with self.subTest(attr=attr, typ=types):
                     self.assertIn(attr, instance.__dict__)
-                    self.assertIs(type(instance.__dict__[attr], types))
+                    self.assertIs(type(instance.__dict__[attr]), types)
             self.assertEqual(instance.name, "SiliconValley")
 
     def test_State_id_and_createat(self):
@@ -136,13 +136,13 @@ class test_State_BaseModel(unittest.TestCase):
         instance5 = State()
         created_at = instance5.created_at
         sleep(2)
-        updated_at = instance5.updated_at()
+        updated_at = instance5.updated_at
         instance5.save()
         new_created_at = instance5.created_at
         sleep(2)
         new_updated_at = instance5.updated_at
         self.assertNotEqual(updated_at, new_updated_at)
-        self.assertNotEqual(created_at, new_created_at)
+        self.assertEqual(created_at, new_created_at)
         self.assertTrue(mock_storage.save.called)
 
 
