@@ -49,12 +49,12 @@ class test_place_BaseModel(unittest.TestCase):
     def test_instances(self):
         with patch('models.place'):
             instance = Place()
-            instance.assertEqual(type(instance), Place)
+            self.assertEqual(type(instance), Place)
             instance.name = "OnePiece"
             instance.description = "Amazing place"
             instance.number_rooms = 20
             instance.number_bathrooms = 15
-            instance.max_quest = 9
+            instance.max_guest = 9
             instance.price_by_night = 100
             instance.latitude = 250.3
             instance.longitude = 340.2
@@ -94,7 +94,7 @@ class test_place_BaseModel(unittest.TestCase):
             self.assertEqual(inst_dict['description'], 'Amazing place')
             self.assertEqual(inst_dict['number_rooms'], 20)
             self.assertEqual(inst_dict['number_bathrooms'], 15)
-            self.assertEqual(inst_dict['max_guest'])
+            self.assertEqual(inst_dict['max_guest'], 9)
             self.assertEqual(inst_dict['price_by_night'], 100)
             self.assertEqual(inst_dict['latitude'], 250.3)
             self.assertEqual(inst_dict['longitude'], 340.2)
@@ -105,9 +105,9 @@ class test_place_BaseModel(unittest.TestCase):
             for attr, types in expectec_attrs_types.items():
                 with self.subTest(attr=attr, typ=types):
                     self.assertIn(attr, instance.__dict__)
-                    self.assertIs(type(instance.__dict__[attr], types))
+                    self.assertIs(type(instance.__dict__[attr]), types)
             self.assertEqual(instance.name, "OnePiece")
-            self.assertEqual(instance.description, "Amenity place")
+            self.assertEqual(instance.description, "Amazing place")
             self.assertEqual(instance.number_rooms, 20)
             self.assertEqual(instance.number_bathrooms, 15)
             self.assertEqual(instance.max_guest, 9)
@@ -152,13 +152,13 @@ class test_place_BaseModel(unittest.TestCase):
         instance5 = Place()
         created_at = instance5.created_at
         sleep(2)
-        updated_at = instance5.updated_at()
+        updated_at = instance5.updated_at
         instance5.save()
         new_created_at = instance5.created_at
         sleep(2)
         new_updated_at = instance5.updated_at
         self.assertNotEqual(updated_at, new_updated_at)
-        self.assertNotEqual(created_at, new_created_at)
+        self.assertEqual(created_at, new_created_at)
         self.assertTrue(mock_storage.save.called)
 
 
