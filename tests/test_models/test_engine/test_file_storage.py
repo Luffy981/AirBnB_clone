@@ -13,6 +13,7 @@ from models.base_model import BaseModel
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.engine.file_storage import FileStorage
+from models.engine import file_storage
 from models.city import City
 from models.review import Review
 from models.place import Place
@@ -21,6 +22,9 @@ from models.user import User
 from datetime import datetime
 import json
 import os
+
+classes = {"BaseModel": BaseModel, "User": User, "State": State,
+           "Amenity": Amenity, "Place": Place, "City": City, "Review": Review}
 
 
 class Test_Base(unittest.TestCase):
@@ -47,6 +51,8 @@ class Test_docstrings_filestorage(unittest.TestCase):
         """Test if module file_storage has documentation
         """
         self.assertTrue(len(models.engine.file_storage.__doc__) > 0)
+        self.assertIsNotNone(file_storage.__doc__,
+                             "file_storage.py need docstrings")
 
     def test_type_field(self):
         """Test type of field
@@ -82,6 +88,19 @@ class Test_docstrings_filestorage(unittest.TestCase):
         # Testing if value was correctly added to __objects
         self.assertEqual(dict_objects[key], object)
 
+        storage = FileStorage()
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        test_dict = {}
+        for key, value in classes.items():
+            with self.subTest(key=key, value=value):
+                instance = value()
+                instance_key = instance.__class__.__name__ + "." + instance.id
+                storage.new(instance)
+                test_dict[instance_key] = instance
+                self.assertEqual(test_dict, storage._FileStorage__objects)
+        FileStorage._FileStorage__objects = save
+
     def test_save(self):
         """Test for save method
         """
@@ -106,6 +125,26 @@ class Test_docstrings_filestorage(unittest.TestCase):
         self.assertIn(dummy_key, keys)
         self.assertEqual(dummy_dict, dict_json[dummy_key])
         os.remove(path + "/" + file_name_expected)
+
+    def testing_save(self):
+        """Testing serializes method"""
+        os.remove("file.json")
+        storage = FileStorage()
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        storage.save()
+        FileStorage._FileStorage__objects = save
+        for key, value in new_dict.items():
+            new_dict[key] = value.to_dict()
+        string = json.dumps(new_dict)
+        with open("file.json", "r") as f:
+            js = f.read()
+        self.assertEqual(json.loads(string), json.loads(js))
 
     def test_reload(self):
         """Test Reload Method
