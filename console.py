@@ -31,8 +31,10 @@ class HBNBCommand(cmd.Cmd):
         """
         if line_args_obj == "" or line_args_obj is None:
             print('** class name missing **')
+            return
         elif line_args_obj not in classes:
             print("** class doesn't exist **")
+            return
         try:
             string_class = ("{}()".format(line_args_obj))
             new_instance = eval(string_class)
