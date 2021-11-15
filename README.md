@@ -61,18 +61,22 @@ $
 
 ## On the console
 
-Command | Example
+Commands | Description | Example
 ------- | -------
-Run the console | ```./console.py```
-Quit the console | ```(hbnb) quit```
-Display the help for a command | ```(hbnb) help <command>```
-Create an object (prints its id)| ```(hbnb) create <class>```
-Show an object | ```(hbnb) show <class> <id>``` or ```(hbnb) <class>.show(<id>)```
-Destroy an object | ```(hbnb) destroy <class> <id>``` or ```(hbnb) <class>.destroy(<id>)```
-Show all objects, or all instances of a class | ```(hbnb) all``` or ```(hbnb) all <class>```
-Update an attribute of an object | ```(hbnb) update <class> <id> <attribute name> "<attribute value>"``` or ```(hbnb) <class>.update(<id>, <attribute name>, "<attribute value>")```
-Count the number of instances of an object | ```(hbnb) <class>.count()```
-Update attributes of an object using an dictionary | ```(hbnb) <class>.update("<id>", {dictionary representation})```
+-- | Run the console | ```./console.py```
+quit | Quit the console | ```(hbnb) quit```
+help + command | Display the help for a command | ```(hbnb) help <command>```
+create + class | Create an object (prints its id)| ```(hbnb) create <class>```
+show + class + id | Show an object | ```(hbnb) show <class> <id>``` or ```(hbnb) <class>.show(<id>)```
+destroy + class + id | Destroy an object | ```(hbnb) destroy <class> <id>``` or ```(hbnb) <class>.destroy(<id>)```
+all | Show all objects, or all instances of a class | ```(hbnb) all``` or ```(hbnb) all <class>```
+update + class + id | Update an attribute of an object | ```(hbnb) update <class> <id> <attribute name> "<attribute value>"``` or ```(hbnb) <class>.update(<id>, <attribute name>, "<attribute value>")```
+class.count() | Count the number of instances of an object | ```(hbnb) <class>.count()```
+class.update() | Update attributes of an object using an dictionary | ```(hbnb) <class>.update("<id>", {dictionary representation})```
+help EOF | Show EOF command information | ```(hbnb) help EOF```
+help quit | Show quit command information | ```(hbnb) help quit```
+help all | Show all command information | ```(hbnb) help all```
+help destroy | Show destroy command information | ```(hbnb) help destroy```
 
 ## Authors
 
