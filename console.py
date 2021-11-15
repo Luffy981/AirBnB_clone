@@ -56,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return False
         instance = args[0] + "." + args[1]
-        if instance in models.storage.all():
+        for instance in models.storage.all():
             print(models.storage.all()[instance])
         else:
             print("** no instance found **")

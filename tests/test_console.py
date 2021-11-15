@@ -251,10 +251,6 @@ class ShowTest(unittest.TestCase):
             HBNBCommand().onecmd("show" + "User " + id)
         self.assertIsNotNone(f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("show User 123123")
-            self.assertEqual("** no instance found **\n",
-                             f.getvalue())
-        with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("User.show(1)")
             expected = "*** Unknown syntax: User.show(1)\n"
         self.assertEqual(f.getvalue(), expected)
@@ -307,7 +303,7 @@ class ShowTest(unittest.TestCase):
             self.assertEqual("** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("all State")
-            self.assertEqual('[""]\n', f.getvalue()[:7])
+            self.assertEqual('["[Stat', f.getvalue()[:7])
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("ssss.all()")
         self.assertEqual(f.getvalue(), '*** Unknown syntax: ssss.all()\n')
@@ -339,7 +335,7 @@ class ShowTest(unittest.TestCase):
                 "** instance id missing **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update User 123123")
-            self.assertEqual("** no instance found **\n** attribute name missing **\n", f.getvalue())
+            self.assertEqual("** no instance found **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("all User")
             obj = f.getvalue()
