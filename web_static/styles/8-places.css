@@ -89,7 +89,9 @@
 	background-position: top;
 	position: relative;
 }
-
+.places article .Amenities div {
+	margin top: 40px;
+}
 .places article .information .logo {
 	width: 100px;
 	height: 75%;
@@ -109,6 +111,7 @@
 .places article .information .number_bathrooms .logo {
 	background-image: url("../images/icon_bath.png");
 }
+
 
 .places article .user {
 	margin: 10px 0;
